@@ -25,7 +25,7 @@ module RedmineIssueListDetail
             value.to_s(issue) do |other|
               text = "##{other.id} (#{other.status})"
               title = other.subject.truncate(60)
-              link_to(text, issue_url(issue, :only_path => true), :class => issue.css_classes, :title => title)
+              link_to(text, issue_url(other, :only_path => true), :class => other.css_classes, :title => title)
             end.html_safe,
             :class => value.css_classes_for(issue))
         end
