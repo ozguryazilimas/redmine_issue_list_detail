@@ -4,16 +4,10 @@ module RedmineIssueListDetail
   module Patches
     module QueriesHelperPatch
       def self.included(base)
-        base.extend(ClassMethods)
         base.send(:include, InstanceMethods)
         base.class_eval do
-          unloadable
           alias_method_chain :column_value, :redmine_issue_list_detail
         end
-      end
-
-      module ClassMethods
-
       end
 
       module InstanceMethods
