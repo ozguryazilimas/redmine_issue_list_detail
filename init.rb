@@ -4,10 +4,10 @@ Redmine::Plugin.register :redmine_issue_list_detail do
   name 'Redmine Issue List Detail plugin'
   author 'Onur Kucuk'
   description 'Redmine plugin to format issue list'
-  version '0.5.0'
+  version '1.0.0'
   url 'http://www.ozguryazilim.com.tr'
   author_url 'http://www.ozguryazilim.com.tr'
-  requires_redmine :version_or_higher => '3.0.7'
+  requires_redmine :version_or_higher => '4.0.0'
 end
 
 Rails.configuration.to_prepare do

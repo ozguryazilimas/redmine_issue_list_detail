@@ -3,18 +3,11 @@ require_dependency 'queries_helper'
 module RedmineIssueListDetail
   module Patches
     module QueriesHelperPatch
-      def self.included(base)
-        base.send(:include, InstanceMethods)
-        base.class_eval do
-          alias_method_chain :column_value, :redmine_issue_list_detail
-        end
-      end
 
-      module InstanceMethods
+      def column_value(column, issue, value)
+        Rails.logger.info "\x1b[1;33m issue #{issue.id} column.name #{column.name} \x1b[0m"
 
-        def column_value_with_redmine_issue_list_detail(column, issue, value)
-          return column_value_without_redmine_issue_list_detail(column, issue, value) unless column.name == :relations
-
+        if column.name == :relations
           content_tag('span',
             value.to_s(issue) do |other|
               text = "##{other.id} (#{other.status})"
@@ -22,11 +15,15 @@ module RedmineIssueListDetail
               link_to(text, issue_url(other, :only_path => true), :class => other.css_classes, :title => title)
             end.html_safe,
             :class => value.css_classes_for(issue))
+        else
+          super
         end
-
       end
 
     end
   end
 end
+
+QueriesHelper.prepend(RedmineIssueListDetail::Patches::QueriesHelperPatch)
+
 
